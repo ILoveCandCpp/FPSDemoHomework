@@ -1,6 +1,8 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "FPSDemoHomeworkCharacter.h"
+
+#include "FPSDemoHomeworkGameMode.h"
 #include "FPSDemoHomeworkProjectile.h"
 #include "Animation/AnimInstance.h"
 #include "Camera/CameraComponent.h"
@@ -11,6 +13,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "MotionControllerComponent.h"
 #include "XRMotionControllerBase.h" // for FXRMotionControllerBase::RightHandSourceId
+#include "Blueprint/UserWidget.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 
@@ -25,6 +28,11 @@ AFPSDemoHomeworkCharacter::AFPSDemoHomeworkCharacter()
 	// set our turn rates for input
 	BaseTurnRate = 45.f;
 	BaseLookUpRate = 45.f;
+	Health = 1.0f;
+	Energy = 1.f;
+	MaxAmmo = 30;
+	Ammo = 30;
+	OnceFiredAmmo = 1;
 
 	// Create a CameraComponent	
 	FirstPersonCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
@@ -82,6 +90,7 @@ AFPSDemoHomeworkCharacter::AFPSDemoHomeworkCharacter()
 
 	// Uncomment the following line to turn motion controllers on by default:
 	//bUsingMotionControllers = true;
+	// CurrentWidgetClass =Cast<UUserWidget>(LoadClass<UUserWidget>(nullptr, TEXT("WidgetBlueprint'/Game/FirstPersonCPP/Blueprints/BP_PauseMenu.BP_PauseMenu'")));
 }
 
 void AFPSDemoHomeworkCharacter::BeginPlay()
@@ -140,7 +149,17 @@ void AFPSDemoHomeworkCharacter::SetupPlayerInputComponent(class UInputComponent*
 
 void AFPSDemoHomeworkCharacter::OnFire()
 {
-	// try and fire a projectile
+	//
+	// AMyPlayerState* PlayerState = Cast<AMyPlayerState>(GetPlayerState());
+	if(Ammo < OnceFiredAmmo)
+	{
+		return;
+	}
+	else
+	{
+		Ammo -= OnceFiredAmmo;
+	}
+		// try and fire a projectile
 	if (ProjectileClass != nullptr)
 	{
 		UWorld* const World = GetWorld();
