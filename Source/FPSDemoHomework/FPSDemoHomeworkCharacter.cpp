@@ -117,18 +117,33 @@ void AFPSDemoHomeworkCharacter::BeginPlay()
 //////////////////////////////////////////////////////////////////////////
 // Input
 
+void AFPSDemoHomeworkCharacter::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	if(Energy >= 1.0)
+	{
+		return;
+	}
+	Energy += 0.1 * DeltaSeconds;
+	if( Energy >= 1.0)
+	{
+		Energy = 1.0;
+	}
+}
+
 void AFPSDemoHomeworkCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// set up gameplay key bindings
 	check(PlayerInputComponent);
 
 	// Bind jump events
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AFPSDemoHomeworkCharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
 	// Bind fire event
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AFPSDemoHomeworkCharacter::OnFire);
-
+	PlayerInputComponent->BindAction("ResumeAmmo", IE_Pressed, this, &AFPSDemoHomeworkCharacter::ResumeAmmo);
+	
 	// Enable touchscreen input
 	EnableTouchscreenMovement(PlayerInputComponent);
 
@@ -289,6 +304,28 @@ void AFPSDemoHomeworkCharacter::MoveRight(float Value)
 		// add movement in that direction
 		AddMovementInput(GetActorRightVector(), Value);
 	}
+}
+
+void AFPSDemoHomeworkCharacter::Jump()
+{
+	if(Energy < 0.2)
+	{
+		return;
+	}
+	else
+	{
+		Energy -= 0.2;
+	}
+	Super::Jump();
+}
+
+void AFPSDemoHomeworkCharacter::ResumeAmmo()
+{
+	if(TouchItem.bIsPressed)
+	{
+		return;
+	}
+	Ammo = MaxAmmo;
 }
 
 void AFPSDemoHomeworkCharacter::TurnAtRate(float Rate)

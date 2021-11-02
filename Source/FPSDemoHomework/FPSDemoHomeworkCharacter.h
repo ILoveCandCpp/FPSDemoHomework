@@ -117,11 +117,19 @@ protected:
 	/** Handles stafing movement, left and right */
 	void MoveRight(float Val);
 
+	/** Jump 消耗Energy */
+	void Jump() override;
+
+	/** 回复Ammo */
+	void ResumeAmmo();
+	
 	/**
 	 * Called via input to turn at a given rate.
 	 * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
 	 */
 	void TurnAtRate(float Rate);
+
+	
 
 	/**
 	 * Called via input to turn look up/down at a given rate.
@@ -141,6 +149,8 @@ protected:
 	void EndTouch(const ETouchIndex::Type FingerIndex, const FVector Location);
 	void TouchUpdate(const ETouchIndex::Type FingerIndex, const FVector Location);
 	TouchData	TouchItem;
+
+	virtual void Tick(float DeltaSeconds) override;
 	
 protected:
 	// APawn interface

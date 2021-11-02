@@ -3,3 +3,7 @@
 
 #include "MyGameStateBase.h"
 
+AMyGameStateBase::AMyGameStateBase()
+{
+	Socre = 0;
+}

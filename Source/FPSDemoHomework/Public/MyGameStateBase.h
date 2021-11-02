@@ -15,6 +15,9 @@ class FPSDEMOHOMEWORK_API AMyGameStateBase : public AGameStateBase
 	GENERATED_BODY()
 
 public:
+	AMyGameStateBase();
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int Socre;
 	
 };

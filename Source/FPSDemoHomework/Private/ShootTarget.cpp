@@ -3,6 +3,9 @@
 
 #include "ShootTarget.h"
 
+#include "MyGameStateBase.h"
+#include "FPSDemoHomework/FPSDemoHomeworkProjectile.h"
+
 // Sets default values
 AShootTarget::AShootTarget()
 {
@@ -23,5 +26,15 @@ void AShootTarget::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AShootTarget::NotifyActorBeginOverlap(AActor* OtherActor)
+{
+	Super::NotifyActorBeginOverlap(OtherActor);
+	if(Cast<AFPSDemoHomeworkProjectile>(OtherActor))
+	{
+		Cast<AMyGameStateBase>(GetWorld()->GetGameState())->Socre ++;
+		OtherActor->Destroy();
+	}
 }
 
