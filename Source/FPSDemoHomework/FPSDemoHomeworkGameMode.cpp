@@ -52,6 +52,7 @@ void AFPSDemoHomeworkGameMode::Tick(float DeltaSeconds)
 void AFPSDemoHomeworkGameMode::OnVictory()
 {
 	
+	
 }
 
 void AFPSDemoHomeworkGameMode::BeginPlay()
