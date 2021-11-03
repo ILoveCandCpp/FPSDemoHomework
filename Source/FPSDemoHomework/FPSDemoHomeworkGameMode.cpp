@@ -38,22 +38,44 @@ void AFPSDemoHomeworkGameMode::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidg
 void AFPSDemoHomeworkGameMode::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-
-	AMyGameStateBase* GS = GetGameState<AMyGameStateBase>();
+	/* UE_LOG(LogTemp, Error, TEXT(" AFPSDemoHomeworkGameMode::Tick  "));
+	AMyGameStateBase* GS = Cast<AMyGameStateBase>(GetWorld()->GetGameState());
 	if (GS)
 	{
 		if(GS->Socre >= 10)
 		{
+			UE_LOG(LogTemp, Error, TEXT(" AFPSDemoHomeworkGameMode::Tick  "));
 			OnVictory();
 		}
-	}
+	}*/
 }
 
 void AFPSDemoHomeworkGameMode::OnVictory()
 {
-	
-	
+	UE_LOG(LogTemp, Error, TEXT("ERRRRRRRRRRRRRRRRRRRR OnVictory "));
+	static ConstructorHelpers::FClassFinder<UUserWidget> UserWidgetClassFinder(TEXT("WidgetBlueprint'/Game/FirstPersonCPP/Blueprints/BP_Victory.BP_Victory'"));
+	if(UserWidgetClassFinder.Succeeded())
+	{
+		if (CurrentWidget != nullptr)
+		{
+			CurrentWidget->RemoveFromViewport();
+			CurrentWidget = nullptr;
+		}
+		if (UserWidgetClassFinder.Class != nullptr)
+		{
+			CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), UserWidgetClassFinder.Class);
+			if (CurrentWidget != nullptr)
+			{
+				CurrentWidget->AddToViewport();
+			}
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"));
+	}
 }
+
 
 void AFPSDemoHomeworkGameMode::BeginPlay()
 {

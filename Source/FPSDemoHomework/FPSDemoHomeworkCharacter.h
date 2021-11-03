@@ -121,6 +121,7 @@ protected:
 	void Jump() override;
 
 	/** 回复Ammo */
+	UFUNCTION(BlueprintCallable)
 	void ResumeAmmo();
 	
 	/**

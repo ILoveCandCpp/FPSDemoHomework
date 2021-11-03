@@ -6,4 +6,5 @@
 AMyGameStateBase::AMyGameStateBase()
 {
 	Socre = 0;
+	bIsVectory = false;
 }

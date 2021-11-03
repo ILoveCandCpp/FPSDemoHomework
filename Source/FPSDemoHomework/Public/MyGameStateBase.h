@@ -17,7 +17,9 @@ class FPSDEMOHOMEWORK_API AMyGameStateBase : public AGameStateBase
 public:
 	AMyGameStateBase();
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int Socre;
-	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bIsVectory;
 };

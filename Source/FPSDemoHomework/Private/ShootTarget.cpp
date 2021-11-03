@@ -33,7 +33,12 @@ void AShootTarget::NotifyActorBeginOverlap(AActor* OtherActor)
 	Super::NotifyActorBeginOverlap(OtherActor);
 	if(Cast<AFPSDemoHomeworkProjectile>(OtherActor))
 	{
-		Cast<AMyGameStateBase>(GetWorld()->GetGameState())->Socre ++;
+		AMyGameStateBase *GS = Cast<AMyGameStateBase>(GetWorld()->GetGameState());
+		GS->Socre++;
+		if (GS->Socre >= 30)
+		{
+			GS->bIsVectory = true;
+		}
 		OtherActor->Destroy();
 	}
 }
